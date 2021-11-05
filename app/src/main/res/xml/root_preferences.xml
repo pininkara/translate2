@@ -26,4 +26,13 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="其他">
+
+        <EditTextPreference
+            app:key="command"
+            app:title="命令行参数"
+            app:summary="仅供高级用户使用"/>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

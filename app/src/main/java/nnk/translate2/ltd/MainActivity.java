@@ -1,8 +1,5 @@
 package nnk.translate2.ltd;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -24,8 +21,15 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
 import nnk.translate2.ltd.Utils.GoogleApi;
 import nnk.translate2.ltd.Utils.Languega;
+import nnk.translate2.ltd.Utils.ThemeUtils;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,18 +38,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String NET_ERROR = "com.alibaba.fastjson.JSONException: syntax error, expect [, actual error, pos 0, fieldName null";
 
     RadioGroup radioGroup;
-    Button bt_start, bt_copy, bt_why;
+    Button bt_start, bt_why;
+    FloatingActionButton fab;
     EditText source_text, et_diy_number, et_result;
     Spinner tar_lang;
+    AlertDialog.Builder warning;
     int frequency = 1;
     String result = "";
     String lang = "";
 
     SharedPreferences settings_sp;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ThemeUtils.set_theme(this);
         setContentView(R.layout.activity_main);
 
         initView();  //自定义初始化视图函数
@@ -96,15 +105,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initView() {
         settings_sp = getSharedPreferences("settings", MODE_PRIVATE);
 
-
         radioGroup = findViewById(R.id.radioGroup);
         et_diy_number = findViewById(R.id.et_diy_number);
         bt_start = findViewById(R.id.bt_start);
         source_text = findViewById(R.id.source_text);
         et_result = findViewById(R.id.et_result);
-        bt_copy = findViewById(R.id.bt_copy);
         bt_why = findViewById(R.id.bt_why);
         tar_lang = findViewById(R.id.tar_lang);
+        warning = new AlertDialog.Builder(this);
+        fab = findViewById(R.id.fab);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -131,10 +140,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         bt_start.setOnClickListener(this);
-        bt_copy.setOnClickListener(this);
         bt_why.setOnClickListener(this);
 
-        et_result.setText(result);
+        fab.setOnClickListener(view -> {
+            copyResult();
+            Snackbar.make(view, "复制结果成功~", Snackbar.LENGTH_LONG).show();
+        });
+
+        et_result.setText("结果将会显示在这里~");
 
         tar_lang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -148,6 +161,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
+
+        int flag = settings_sp.getInt("warn", 3);
+        if (flag >= 0) {
+            warnDialog(flag);
+        }
+
+    }
+
+    private void warnDialog(int flag) {
+        new AlertDialog.Builder(this)
+                .setTitle("温馨提示")
+                .setCancelable(false)
+                .setMessage("翻译服务提供商为防止滥用或DDOS，通常会将发送大量请求的IP封禁，请在合理范围内使用本App~\n\n" +
+                        "本提示还会出现" + flag + "次~")
+                .setPositiveButton("确定", (dialog, which) -> {
+                    settings_sp.edit().putInt("warn", flag - 1).apply();
+                })
+                .show();
+
     }
 
 
@@ -166,8 +198,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     e.printStackTrace();
                 }
                 break;
-            case R.id.bt_copy:
-                copyResult();
             case R.id.bt_why:
                 showWhyDialog();
                 break;
@@ -189,16 +219,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void readyTranslate(Context context) {
         String text = source_text.getText().toString().trim();
         String diy_number = et_diy_number.getText().toString().trim();
-
-        if (TextUtils.isEmpty(diy_number) && frequency == 0) {
-            Toast.makeText(context, "次数不可以为空哦~", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(text)) {
+            Toast.makeText(context, "文本不可以为空哦~", Toast.LENGTH_SHORT).show();
         } else {
-            if (frequency == 0) {
-                translate(text, Integer.valueOf(diy_number));
+            if (TextUtils.isEmpty(diy_number) && frequency == 0) {
+                Toast.makeText(context, "次数不可以为空哦~", Toast.LENGTH_SHORT).show();
             } else {
-                translate(text, frequency);
+                if (frequency == 0) {
+                    translate(text, Integer.valueOf(diy_number));
+                } else {
+                    translate(text, frequency);
+                }
             }
         }
+
     }
 
 
@@ -246,6 +280,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d("nnk3333", "出错啦: " + e.toString());
                     if (e.toString().equals(NET_ERROR)) {
                         handle.sendEmptyMessage(3);
+                    }else {
+                        handle.sendEmptyMessage(4);
                     }
                     e.printStackTrace();
                 }
@@ -275,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-                    bt_copy.setVisibility(View.VISIBLE);
+                    fab.setVisibility(View.VISIBLE);
                     Toast.makeText(MainActivity.this, "完成！", Toast.LENGTH_SHORT).show();
                     break;
                 case 2:
@@ -284,6 +320,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case 3:
                     bt_why.setVisibility(View.VISIBLE);
                     et_result.setText("IP被封禁，请稍后再试~");
+                    break;
+                case 4:
+                    et_result.setText("出错啦~");
+                    break;
+
             }
         }
     }
