@@ -20,12 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Description:
- *
- * @author: bright
- * @date:Created in 2020/11/5 9:04
- */
+
 public class GoogleApi {
     /**
      * 地址
@@ -175,10 +170,7 @@ public class GoogleApi {
      * @return
      */
     public boolean isSupport(String language) {
-        if (null == LANGUAGE_MAP.get(language)) {
-            return false;
-        }
-        return true;
+        return null != LANGUAGE_MAP.get(language);
     }
 
     /**

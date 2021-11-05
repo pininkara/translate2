@@ -3,8 +3,10 @@ package nnk.translate2.ltd;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,7 +30,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import nnk.translate2.ltd.Utils.GoogleApi;
-import nnk.translate2.ltd.Utils.Languega;
+import nnk.translate2.ltd.Utils.Language;
 import nnk.translate2.ltd.Utils.ThemeUtils;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -144,10 +146,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         fab.setOnClickListener(view -> {
             copyResult();
-            Snackbar.make(view, "复制结果成功~", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(view, getString(R.string.copy_succeed), Snackbar.LENGTH_LONG).show();
         });
 
-        et_result.setText("结果将会显示在这里~");
+        et_result.setText(getString(R.string.result_will_show));
 
         tar_lang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -171,11 +173,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void warnDialog(int flag) {
         new AlertDialog.Builder(this)
-                .setTitle("温馨提示")
+                .setTitle(getString(R.string.tips))
                 .setCancelable(false)
-                .setMessage("翻译服务提供商为防止滥用或DDOS，通常会将发送大量请求的IP封禁，请在合理范围内使用本App~\n\n" +
-                        "本提示还会出现" + flag + "次~")
-                .setPositiveButton("确定", (dialog, which) -> {
+                .setMessage(String.format(getString(R.string.ip_ban_tips),flag))
+                .setPositiveButton(getString(R.string.ok), (dialog, which) -> {
                     settings_sp.edit().putInt("warn", flag - 1).apply();
                 })
                 .show();
@@ -192,6 +193,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_start:
+                fab.setVisibility(View.INVISIBLE);
+                Toast.makeText(v.getContext(),getString(R.string.loading),Toast.LENGTH_SHORT).show();
                 try {
                     readyTranslate(v.getContext());
                 } catch (Exception e) {
@@ -206,12 +209,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void showWhyDialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("关于IP封禁");
+        dialog.setTitle(getString(R.string.about_ip));
         dialog.setMessage("翻译服务提供商为防止滥用或DDOS，通常会将发送大量请求的IP封禁，请在合理范围内使用本App~\n" +
                 "如何解决？\n" + "等＞︿＜\n如果不想等可以选择捐赠开发者，使其能换上更高档次的翻译API~\n" +
                 "当然我也不能强求您捐赠，所以下个版本会添加API密钥的支持，您可以自行申请免费API在本APP上使用~");
-        dialog.setPositiveButton("确定", null);
-        dialog.setNeutralButton("捐赠", null);//TODO 捐赠跳转
+        dialog.setPositiveButton(getString(R.string.ok), null);
+        dialog.setNeutralButton(R.string.donate, (dialog1, which) -> {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://nnk.wsunsettide.ltd/donate.html")));
+        });
         dialog.show();
     }
 
@@ -220,10 +225,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String text = source_text.getText().toString().trim();
         String diy_number = et_diy_number.getText().toString().trim();
         if (TextUtils.isEmpty(text)) {
-            Toast.makeText(context, "文本不可以为空哦~", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, getString(R.string.text_empty), Toast.LENGTH_SHORT).show();
         } else {
             if (TextUtils.isEmpty(diy_number) && frequency == 0) {
-                Toast.makeText(context, "次数不可以为空哦~", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.fre_empty), Toast.LENGTH_SHORT).show();
             } else {
                 if (frequency == 0) {
                     translate(text, Integer.valueOf(diy_number));
@@ -240,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param text       待翻译文本
      * @param frequency1 翻译次数
      */
-    private void translate(String text, int frequency1) {//TODO 翻译方法
+    private void translate(String text, int frequency1) {
         int i = 10 - frequency1;
         if (frequency1 <= 0) {
             try {
@@ -258,12 +263,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String result0 = "", result1;
                 try {
                     String random_lang1 = "", random_lang2 = "", random_lang3 = "";
-                    int index1 = (int) (Math.random() * Languega.langList.length);
-                    int index2 = (int) (Math.random() * Languega.langList.length);
-                    int index3 = (int) (Math.random() * Languega.langList.length);
-                    random_lang1 = Languega.langList[index1];
-                    random_lang2 = Languega.langList[index2];
-                    random_lang3 = Languega.langList[index3];
+                    int index1 = (int) (Math.random() * Language.langList.length);
+                    int index2 = (int) (Math.random() * Language.langList.length);
+                    int index3 = (int) (Math.random() * Language.langList.length);
+                    random_lang1 = Language.langList[index1];
+                    random_lang2 = Language.langList[index2];
+                    random_lang3 = Language.langList[index3];
 
                     Log.d("nnk33", "Random_lang1： " + random_lang1 + "\n");
                     Log.d("nnk33", "Random_lang2： " + random_lang2 + "\n");
@@ -312,17 +317,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switch (msg.what) {
                 case 1:
                     fab.setVisibility(View.VISIBLE);
-                    Toast.makeText(MainActivity.this, "完成！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.done), Toast.LENGTH_SHORT).show();
                     break;
                 case 2:
                     et_result.setText(result);
                     break;
                 case 3:
                     bt_why.setVisibility(View.VISIBLE);
-                    et_result.setText("IP被封禁，请稍后再试~");
+                    fab.setVisibility(View.INVISIBLE);
+                    et_result.setText(getString(R.string.ip_ban));
                     break;
                 case 4:
-                    et_result.setText("出错啦~");
+                    et_result.setText(getString(R.string.error));
                     break;
 
             }

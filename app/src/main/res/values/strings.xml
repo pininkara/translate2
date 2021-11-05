@@ -3,8 +3,47 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_about">AboutActivity</string>
 
+    <string name="done">完成!</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+
     <string name="action_settings">设置</string>
     <string name="action_about">关于</string>
     <string name="privacy_and_permission">隐私与协议</string>
     <string name="license">第三方许可</string>
+
+    <string name="ip_ban">无网络或IP被封禁，请稍后再试~</string>
+    <string name="error">未知错误~</string>
+    <string name="tips">温馨提示</string>
+    <string name="ip_ban_tips">翻译服务提供商为防止滥用或DDOS，通常会将发送大量请求的IP封禁，请在合理范围内使用本App~\n\n
+                        本提示还会出现%d次~</string>
+    <string name="result_will_show">结果将会显示在这里~</string>
+    <string name="copy_succeed">复制结果成功~</string>
+    <string name="loading">任务进行中~</string>
+    <string name="about_ip">关于IP封禁</string>
+    <string name="donate">捐赠</string>
+    <string name="text_empty">文本不可以为空哦~</string>
+    <string name="fre_empty">次数不可以为空哦~</string>
+
+    <string name="please_input">请输入文本~</string>
+    <string name="frequency">翻译次数</string>
+    <string name="one">一次</string>
+    <string name="ten">十次</string>
+    <string name="twenty">二十次</string>
+    <string name="diy_number">自定义</string>
+    <string name="tranfre">请输入翻译次数~</string>
+    <string name="tar_lang">目标语言</string>
+    <string name="start">开始！</string>
+    <string name="why">为什么会这样捏？</string>
+    <string name="copy">复制</string>
+
+    <string name="translate_setting">翻译设置</string>
+    <string name="translate_engine">翻译引擎</string>
+    <string name="exterior">外观</string>
+    <string name="change_theme">更换主题</string>
+    <string name="theme_tips">下一次打开应用时生效~</string>
+    <string name="other">其他</string>
+    <string name="command">命令行参数</string>
+    <string name="command_tips">仅供高级用户使用</string>
+
 </resources>

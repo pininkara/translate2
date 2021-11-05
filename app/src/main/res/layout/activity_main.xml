@@ -14,7 +14,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:gravity="top"
-        android:hint="请输入文字"
+        android:hint="@string/please_input"
         android:inputType="textMultiLine"
         android:maxLines="15"
         android:minLines="3"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:text="翻译次数"
+        android:text="@string/frequency"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/source_text" />
 
@@ -52,28 +52,28 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="一次" />
+            android:text="@string/one" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/number10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="十次" />
+            android:text="@string/ten" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/number20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="二十次" />
+            android:text="@string/twenty" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="自定义" />
+            android:text="@string/diy_number" />
 
 
     </RadioGroup>
@@ -87,7 +87,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:hint="请输入翻译次数"
+        android:hint="@string/tranfre"
         android:inputType="number"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
@@ -100,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:text="目标语言"
+        android:text="@string/tar_lang"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_diy_number" />
 
@@ -132,7 +132,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="开始！"
+            android:text="@string/start"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -160,7 +160,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="为什么会这样？"
+        android:text="@string/why"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -172,7 +172,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="60dp"
-        android:contentDescription="复制"
+        android:contentDescription=""
         android:visibility="invisible"
         android:src="@drawable/ic_baseline_content_paste_24"
         app:layout_constraintBottom_toBottomOf="parent"

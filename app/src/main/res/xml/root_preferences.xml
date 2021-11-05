@@ -1,37 +1,37 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="翻译设置">
+    <PreferenceCategory app:title="@string/translate_setting">
 
         <ListPreference
             app:key="engine"
             app:defaultValue="google"
             app:entries="@array/engine"
             app:entryValues="@array/engine_values"
-            app:title="翻译引擎"
+            app:title="@string/translate_engine"
             app:useSimpleSummaryProvider="true" />
 
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="外观">
+    <PreferenceCategory app:title="@string/exterior">
 
     <ListPreference
         app:key="theme"
         app:defaultValue="blue"
         app:entries="@array/theme"
         app:entryValues="@array/theme_values"
-        app:summary="下一次打开应用时生效"
-        app:title="更换主题"
+        app:summary="@string/theme_tips"
+        app:title="@string/change_theme"
         app:useSimpleSummaryProvider="false" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="其他">
+    <PreferenceCategory app:title="@string/other">
 
         <EditTextPreference
             app:key="command"
-            app:title="命令行参数"
-            app:summary="仅供高级用户使用"/>
+            app:title="@string/command"
+            app:summary="@string/command_tips"/>
 
     </PreferenceCategory>
 

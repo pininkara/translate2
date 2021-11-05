@@ -69,7 +69,6 @@ public class SettingsActivity extends AppCompatActivity {
             switch (preference.getKey()){
                 case "theme":
                     settings_sp.edit().putString("theme", (String) newValue).apply();
-                    Log.d("nnk33", "onPreferenceChange: "+newValue);
                     break;
                 case "engine":
                     settings_sp.edit().putString("engine", (String) newValue).apply();
