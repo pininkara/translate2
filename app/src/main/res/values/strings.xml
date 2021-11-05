@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">translate2</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+
+    <string name="action_settings">设置</string>
+    <string name="action_about">关于</string>
+</resources>

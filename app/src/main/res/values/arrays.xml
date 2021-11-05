@@ -1,0 +1,68 @@
+<resources>
+    <string-array name="theme">
+        <item>深空流光</item>
+        <item>日出印象</item>
+        <item>春面桃花</item>
+        <item>一抹丹霞</item>
+
+        <item>绮境森林</item>
+        <item>丰收之景</item>
+        <item>莱茵河畔</item>
+        <item>柳煤竹茶</item>
+
+    </string-array>
+    <string-array name="theme_values">
+        <item>blue</item>
+        <item>orange</item>
+        <item>pink</item>
+        <item>red</item>
+
+        <item>green</item>
+        <item>yellow</item>
+        <item>indigo</item>
+        <item>blue_gray</item>
+
+    </string-array>
+
+
+    <string-array name="language">
+        <item>中文（简体）</item>
+        <item>中文（繁体）</item>
+        <item>英语</item>
+        <item>日语</item>
+        <item>俄语</item>
+        <item>德语</item>
+        <item>法语</item>
+        <item>西班牙语</item>
+    </string-array>
+    <string-array name="language_value">
+        <item>zh_cn</item>
+        <item>zh_tw</item>
+        <item>en</item>
+        <item>ja</item>
+        <item>ru</item>
+        <item>de</item>
+        <item>fr</item>
+        <item>es</item>
+    </string-array>
+
+    <string-array name="engine">
+        <item>谷歌</item>
+        <item>微软</item>
+        <item>DeepL</item>
+        <item>百度</item>
+        <item>有道</item>
+        <item>阿里</item>
+
+    </string-array>
+    <string-array name="engine_values">
+        <item>google</item>
+        <item>bing</item>
+        <item>deepl</item>
+        <item>baidu</item>
+        <item>youdao</item>
+        <item>ali</item>
+    </string-array>
+
+
+</resources>
