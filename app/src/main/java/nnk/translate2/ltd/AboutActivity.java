@@ -45,8 +45,8 @@ public class AboutActivity extends AppCompatActivity {
                 .setDescription("Grass\n"+slogan)
 
                 .addGroup("找到我")
-                .addGitHub("wsunsettide", "Github")
-                .addEmail("wsunsettide@outlook.com", "电子邮箱")
+                .addGitHub("pininkara", "Github")
+                .addEmail("pininkara@outlook.com", "电子邮箱")
                 .addWebsite("https://nnk.wsunsettide.ltd/", "个人主页")
                 .addWebsite("https://nnk.wsunsettide.ltd/donate.html", "捐赠")
 
